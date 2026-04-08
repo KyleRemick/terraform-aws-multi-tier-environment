@@ -42,10 +42,6 @@ Internet clients reach an **Application Load Balancer** in **two public subnets*
 
 Application instances install **nginx** via `user_data` so the target group health check can return HTTP `200` on the configured path.
 
-### Why this repo exists
-
-This project is meant to be easy to scan on GitHub: modular Terraform, a standard network topology, and security-group layering that matches how teams explain “DMZ + private tier” in interviews. It is scoped to stay readable—not every AWS service, but the ones that show up constantly in cloud and support roles.
-
 ### Skills demonstrated
 
 - VPC design across multiple AZs (subnets, routing, NAT vs IGW paths)
@@ -64,23 +60,6 @@ This project is meant to be easy to scan on GitHub: modular Terraform, a standar
 **Cost note:** NAT Gateways and load balancers are billed continuously in most cases. Tear down the stack when you are done testing (`terraform destroy`).
 
 Commit [`.terraform.lock.hcl`](.terraform.lock.hcl) after `terraform init` so provider versions stay reproducible for anyone cloning the repo.
-
-## Repository layout
-
-```text
-.
-├── main.tf
-├── variables.tf
-├── outputs.tf
-├── versions.tf
-├── terraform.tfvars.example
-├── .terraform.lock.hcl
-└── modules/
-    ├── networking/
-    ├── security/
-    ├── alb/
-    └── compute/
-```
 
 ## Deploy
 
@@ -166,7 +145,3 @@ vpc_id                   = "vpc-0123456789abcdef0"
 - **Observability** — CloudWatch alarms on ALB `5xx`, `TargetResponseTime`, or ASG capacity.
 - **Remote state** — S3 backend and DynamoDB locking for collaboration or CI pipelines.
 - **NAT per AZ** — If you need to document higher availability for egress.
-
-## License
-
-This repository is provided as-is for learning and portfolio use. Add a license file if you want explicit terms for reuse.
